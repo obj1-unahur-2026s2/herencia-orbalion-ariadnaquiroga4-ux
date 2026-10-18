@@ -1,0 +1,49 @@
+import orbalion.*
+
+describe "test del ejercicio" {
+    var mario = new GuiaMental(cantCiclosSolares = 15, estaEnSintoniaConEquipo = true, nivelPrecisionEstrategica = 80, rol = GuiaMental)
+    var julia = new EstrategaCuantico(cantCiclosSolares = 12, estaEnSintoniaConEquipo = true, nivelPrecisionEstrategica = 90, rol = EstrategaCuantico)
+    var martin = new ArquitectoEnergia(cantCiclosSolares = 11, estaEnSintoniaConEquipo = false, nivelPrecisionEstrategica = 50, rol = ArquitectoEnergia)
+   
+    var tecComplem = new tecnologiasComplementarias(nombre = "tecno", valorEnergetico = 50, activa = false)
+    var tecComplem2 = new tecnologiasComplementarias(nombre = "tecno2", valorEnergetico = 30, activa = true)
+    var tecComplem3 = new tecnologiasComplementarias(nombre = "tecno3", valorEnergetico = 40, activa = true)
+    
+    var equipoLumi1 = new Luminico(nombre = "lumi 1", energiaBase = 30, entrenador = martin, tecnologiasComplementarias = [tecComplem], nivelRadiacion = 6000, cristalesSolares = [] )
+    var equipoLumi2 = new Luminico(nombre = "lumi 2", energiaBase = 50, entrenador = mario, tecnologiasComplementarias = [tecComplem], nivelRadiacion = 4000, cristalesSolares = [])
+    var equipoLumi3 = new Luminico(nombre = "lumi 3", energiaBase = 50, entrenador = julia, tecnologiasComplementarias = [tecComplem2], nivelRadiacion = 7000, cristalesSolares = ["vidrios Control", "fotovoltaicos", "ventanas solares"])
+    
+    var equipoSin1 = new Sintetico(nombre = "sin 1", energiaBase = 70, entrenador = mario, tecnologiasComplementarias = [tecComplem], nivelProcesamiento = 10, cantModulosActivos = 6, estaCertificado = true)
+    var equipoSin2 = new Sintetico(nombre = "sin 2", energiaBase = 60, entrenador = mario, tecnologiasComplementarias = [tecComplem, tecComplem2], nivelProcesamiento = 10, cantModulosActivos = 4, estaCertificado = true)
+    var equipoSin3 = new Sintetico(nombre = "sin 2", energiaBase = 60, entrenador = martin, tecnologiasComplementarias = [tecComplem2, tecComplem3], nivelProcesamiento = 10, cantModulosActivos = 4, estaCertificado = true)
+
+    var equipoEte = new Eterico(nombre = "eterico 1", energiaBase = 10, entrenador = julia, tecnologiasComplementarias = [tecComplem2, tecComplem3], nivelFluctuacion = 80, cantPortalesEnergeticos = 3)
+    var equipoEte2 = new Eterico(nombre = "eterico 2", energiaBase = 20, entrenador = mario, tecnologiasComplementarias = [tecComplem], nivelFluctuacion = 60, cantPortalesEnergeticos = 3)
+  test "test 1 minimo requeridos" {
+    assert.that(mario.rol())
+    assert.equals(equipoLumi1.energiaBase(), equipoLumi1.energiaTotal())
+    assert.equals(equipoLumi2.energiaBase() * 1.10, equipoLumi2.energiaTotal())
+    assert.equals(equipoSin1.energiaBase() * 0.80, equipoSin1.energisTotal())
+    assert.that(equipoSin2.energiaTotal())
+  }
+
+  test "test 2 minimo requeridos" {
+    assert.that(julia.eliteGalactica())
+    assert.notThat(martin.eliteGalactica())
+    assert.that(mario.eliteGalactica())
+  }
+
+  test "test 3 minimo requridos" {
+    assert.that(equipoLumi3.prestigioUniversal())
+    assert.that(equipoSin3.prestigioUniversal())
+    assert.notThat(equipoLumi2.prestigioUniversal())
+    assert.notThat(equipoSin2.prestigioUniversal())
+  }
+
+  test "test 4 minimo requerido" {
+    assert.that(equipoEte.prestigioUniversal())
+    assert.that(equipoEte.prestigioUniversal()) //se aplica el incremento
+    assert.notThat(equipoEte2.prestigioUniversal())
+    //assert.equals(equipoEte2.energiaBase(), equipoEte2.energiaTotal()) 
+  }
+}
